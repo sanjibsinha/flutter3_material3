@@ -1,14 +1,17 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'model/counting_the_number.dart';
 import 'model/theme.dart';
 
-final settings = ValueNotifier(ThemeSettings(
-  sourceColor: Colors.pink,
-  themeMode: ThemeMode.system,
-));
+final settings = ValueNotifier(
+  ThemeSettings(
+    sourceColor: Colors.pink,
+    themeMode: ThemeMode.system,
+  ),
+);
 
 void main() => runApp(
       ChangeNotifierProvider(
@@ -45,10 +48,8 @@ class FlutterMaterialHome extends StatelessWidget {
   const FlutterMaterialHome({Key? key}) : super(key: key);
 
   static const List<String> _tabs = <String>['Pages', 'Categories'];
-  static const List<String> _pages = <String>[
-    'Home',
-    'About',
-    'Contact',
+  static const List<Widget> _pages = <Widget>[
+    HomePage(),
   ];
   static const List<String> _categories = <String>[
     'Flutter',
@@ -74,7 +75,9 @@ class FlutterMaterialHome extends StatelessWidget {
                 (BuildContext context, bool innerBoxIsScrolled) {
               return <Widget>[
                 SliverAppBar(
-                  title: const Text('Flutter 3.0 Notification & Material 3'),
+                  title: const Text(
+                    'Flutter 3.0 Notification & Material 3',
+                  ),
                   pinned: true,
                   floating: true,
                   bottom: TabBar(
@@ -88,7 +91,7 @@ class FlutterMaterialHome extends StatelessWidget {
                 ListView.builder(
                   itemCount: _pages.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return ListTile(title: Text(_pages[index]));
+                    return ListTile(title: _pages[index]);
                   },
                 ),
                 ListView.builder(
@@ -98,6 +101,75 @@ class FlutterMaterialHome extends StatelessWidget {
                   },
                 ),
               ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Home(),
+          ),
+        );
+      },
+      child: Text(
+        'Let\'s Blog',
+        style: GoogleFonts.laila(
+          fontSize: 30.0,
+          fontWeight: FontWeight.bold,
+          color: Theme.of(context).cardTheme.color,
+        ),
+      ),
+    );
+  }
+}
+
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Blog',
+          style: GoogleFonts.adventPro(
+            fontSize: 30.0,
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).cardTheme.shadowColor,
+          ),
+        ),
+      ),
+      body: Center(
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Theme.of(context).colorScheme.outline,
+              width: 10,
+            ),
+          ),
+          child: Text(
+            'Blog',
+            style: GoogleFonts.laila(
+              fontSize: 30.0,
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).cardTheme.color,
             ),
           ),
         ),
