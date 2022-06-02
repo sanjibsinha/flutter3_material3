@@ -50,6 +50,7 @@ class FlutterMaterialHome extends StatelessWidget {
   static const List<String> _tabs = <String>['Pages', 'Categories'];
   static const List<Widget> _pages = <Widget>[
     HomePage(),
+    BlogPage(),
   ];
   static const List<String> _categories = <String>[
     'Flutter',
@@ -124,7 +125,7 @@ class HomePage extends StatelessWidget {
         );
       },
       child: Text(
-        'Let\'s Blog',
+        'Home Page',
         style: GoogleFonts.laila(
           fontSize: 30.0,
           fontWeight: FontWeight.bold,
@@ -135,20 +136,15 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class Home extends StatefulWidget {
+class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
 
-  @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Blog',
+          'Home Page',
           style: GoogleFonts.adventPro(
             fontSize: 30.0,
             fontWeight: FontWeight.bold,
@@ -165,7 +161,71 @@ class _HomeState extends State<Home> {
             ),
           ),
           child: Text(
-            'Blog',
+            'Home Page',
+            style: GoogleFonts.laila(
+              fontSize: 30.0,
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).cardTheme.color,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class BlogPage extends StatelessWidget {
+  const BlogPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Blog(),
+          ),
+        );
+      },
+      child: Text(
+        'Blog Page',
+        style: GoogleFonts.laila(
+          fontSize: 30.0,
+          fontWeight: FontWeight.bold,
+          color: Theme.of(context).cardTheme.color,
+        ),
+      ),
+    );
+  }
+}
+
+class Blog extends StatelessWidget {
+  const Blog({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Blog Page',
+          style: GoogleFonts.adventPro(
+            fontSize: 30.0,
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).cardTheme.shadowColor,
+          ),
+        ),
+      ),
+      body: Center(
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Theme.of(context).colorScheme.outline,
+              width: 10,
+            ),
+          ),
+          child: Text(
+            'Blog Page',
             style: GoogleFonts.laila(
               fontSize: 30.0,
               fontWeight: FontWeight.bold,
