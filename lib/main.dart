@@ -8,7 +8,7 @@ import 'model/theme.dart';
 
 final settings = ValueNotifier(
   ThemeSettings(
-    sourceColor: Colors.pink,
+    sourceColor: Colors.red.shade900,
     themeMode: ThemeMode.system,
   ),
 );
@@ -38,6 +38,8 @@ class FlutterMaterial extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: theme.dark(settings.value.sourceColor),
+      darkTheme: theme.dark(settings.value.sourceColor), // Add this line
+      themeMode: theme.themeMode(),
       title: _title,
       home: const MyScaffold(),
     );
