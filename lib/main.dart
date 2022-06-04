@@ -8,7 +8,7 @@ import 'model/theme.dart';
 
 final settings = ValueNotifier(
   ThemeSettings(
-    sourceColor: Colors.red.shade900,
+    sourceColor: Colors.yellow.shade900,
     themeMode: ThemeMode.system,
   ),
 );
@@ -46,38 +46,69 @@ class FlutterMaterial extends StatelessWidget {
   }
 }
 
-class MyScaffold extends StatelessWidget {
+class MyScaffold extends StatefulWidget {
   const MyScaffold({Key? key}) : super(key: key);
 
   @override
+  State<MyScaffold> createState() => _MyScaffoldState();
+}
+
+class _MyScaffoldState extends State<MyScaffold> {
+  int currentPageIndex = 0;
+  @override
   Widget build(BuildContext context) {
     return Material(
-      child: Column(
-        children: <Widget>[
-          MyAppBar(
-            title: Text(
-              'Test Your Knowledge...',
-              style: GoogleFonts.alexBrush(
-                fontSize: 30.0,
-                color: Theme.of(context).colorScheme.error,
+      child: Scaffold(
+        body: Column(
+          children: <Widget>[
+            MyAppBar(
+              title: Text(
+                'Test Your Knowledge...',
+                style: GoogleFonts.alexBrush(
+                  fontSize: 30.0,
+                  color: Theme.of(context).colorScheme.error,
+                ),
               ),
             ),
-          ),
-          Expanded(
-            child: Center(
-              child: Container(
-                margin: const EdgeInsets.all(20.0),
-                child: Text(
-                  'Here we will place our body widget...',
-                  style: GoogleFonts.charm(
-                    fontSize: 60.0,
-                    color: Theme.of(context).colorScheme.outline,
+            Expanded(
+              child: Center(
+                child: Container(
+                  margin: const EdgeInsets.all(20.0),
+                  child: Text(
+                    'Here we will place our body widget...',
+                    style: GoogleFonts.charm(
+                      fontSize: 60.0,
+                      color: Theme.of(context).colorScheme.outline,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
+        bottomNavigationBar: NavigationBar(
+          onDestinationSelected: (int index) {
+            setState(() {
+              currentPageIndex = index;
+            });
+          },
+          selectedIndex: currentPageIndex,
+          destinations: const <Widget>[
+            NavigationDestination(
+              icon: Icon(Icons.explore),
+              label: 'Explore',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.commute),
+              label: 'Commute',
+            ),
+            NavigationDestination(
+              selectedIcon: Icon(Icons.bookmark),
+              icon: Icon(Icons.bookmark_border),
+              label: 'Saved',
+            ),
+          ],
+        ),
       ),
     );
   }
