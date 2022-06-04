@@ -39,200 +39,79 @@ class FlutterMaterial extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: theme.dark(settings.value.sourceColor),
       title: _title,
-      home: const FlutterMaterialHome(),
+      home: const MyScaffold(),
     );
   }
 }
 
-class FlutterMaterialHome extends StatelessWidget {
-  const FlutterMaterialHome({Key? key}) : super(key: key);
-
-  static const List<String> _tabs = <String>['Pages', 'Categories'];
-  static const List<Widget> _pages = <Widget>[
-    HomePage(),
-    BlogPage(),
-  ];
-  static const List<String> _categories = <String>[
-    'Flutter',
-    'Dart',
-    'Algorithm',
-  ];
+class MyScaffold extends StatelessWidget {
+  const MyScaffold({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: _tabs.length,
-      child: Scaffold(
-        // Listens to the scroll events and returns the current position.
-        body: NotificationListener<ScrollNotification>(
-          onNotification: (ScrollNotification scrollNotification) {
-            if (scrollNotification is ScrollStartNotification) {
-            } else if (scrollNotification is ScrollEndNotification) {}
-            // Return true to cancel the notification bubbling.
-            return true;
-          },
-          child: NestedScrollView(
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return <Widget>[
-                SliverAppBar(
-                  title: const Text(
-                    'Flutter 3.0 Notification & Material 3',
-                  ),
-                  pinned: true,
-                  floating: true,
-                  bottom: TabBar(
-                    tabs: _tabs.map((String name) => Tab(text: name)).toList(),
+    return Material(
+      child: Column(
+        children: <Widget>[
+          MyAppBar(
+            title: Text(
+              'Test Your Knowledge...',
+              style: GoogleFonts.alexBrush(
+                fontSize: 30.0,
+                color: Theme.of(context).colorScheme.error,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Center(
+              child: Container(
+                margin: const EdgeInsets.all(20.0),
+                child: Text(
+                  'Here we will place our body widget...',
+                  style: GoogleFonts.charm(
+                    fontSize: 60.0,
+                    color: Theme.of(context).colorScheme.outline,
                   ),
                 ),
-              ];
-            },
-            body: TabBarView(
-              children: <Widget>[
-                ListView.builder(
-                  itemCount: _pages.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(title: _pages[index]);
-                  },
-                ),
-                ListView.builder(
-                  itemCount: _categories.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(title: Text(_categories[index]));
-                  },
-                ),
-              ],
+              ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class MyAppBar extends StatelessWidget {
+  const MyAppBar({Key? key, required this.title}) : super(key: key);
+
+  final Widget title;
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const Home(),
-          ),
-        );
-      },
-      child: Text(
-        'Home Page',
-        style: GoogleFonts.laila(
-          fontSize: 30.0,
-          fontWeight: FontWeight.bold,
-          color: Theme.of(context).cardTheme.color,
+    return Container(
+      height: 116.0,
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Theme.of(context).colorScheme.outline,
+          width: 10,
         ),
       ),
-    );
-  }
-}
-
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Home Page',
-          style: GoogleFonts.adventPro(
-            fontSize: 30.0,
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).cardTheme.shadowColor,
+      child: Row(
+        children: <Widget>[
+          const IconButton(
+            icon: Icon(Icons.menu),
+            tooltip: 'Navigation menu',
+            onPressed: null,
           ),
-        ),
-      ),
-      body: Center(
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Theme.of(context).colorScheme.outline,
-              width: 10,
-            ),
+          Expanded(
+            child: title,
           ),
-          child: Text(
-            'Home Page',
-            style: GoogleFonts.laila(
-              fontSize: 30.0,
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).cardTheme.color,
-            ),
+          const IconButton(
+            icon: Icon(Icons.search),
+            tooltip: 'Search',
+            onPressed: null,
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class BlogPage extends StatelessWidget {
-  const BlogPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const Blog(),
-          ),
-        );
-      },
-      child: Text(
-        'Blog Page',
-        style: GoogleFonts.laila(
-          fontSize: 30.0,
-          fontWeight: FontWeight.bold,
-          color: Theme.of(context).cardTheme.color,
-        ),
-      ),
-    );
-  }
-}
-
-class Blog extends StatelessWidget {
-  const Blog({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Blog Page',
-          style: GoogleFonts.adventPro(
-            fontSize: 30.0,
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).cardTheme.shadowColor,
-          ),
-        ),
-      ),
-      body: Center(
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Theme.of(context).colorScheme.outline,
-              width: 10,
-            ),
-          ),
-          child: Text(
-            'Blog Page',
-            style: GoogleFonts.laila(
-              fontSize: 30.0,
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).cardTheme.color,
-            ),
-          ),
-        ),
+        ],
       ),
     );
   }
