@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-/// using the mixin concept of dart that we have discussed
-/// in our previous chapter
+/// using the mixin concept of dart
 class CountingTheNumber with ChangeNotifier {
   int value = 0;
   void increaseValue() {

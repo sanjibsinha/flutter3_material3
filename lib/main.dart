@@ -34,6 +34,7 @@ class FlutterMaterial extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('First Build');
     final theme = ThemeProvider.of(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -41,111 +42,67 @@ class FlutterMaterial extends StatelessWidget {
       darkTheme: theme.dark(settings.value.sourceColor), // Add this line
       themeMode: theme.themeMode(),
       title: _title,
-      home: const MyScaffold(),
+      home: const MyHomePage(),
     );
   }
 }
 
-class MyScaffold extends StatefulWidget {
-  const MyScaffold({Key? key}) : super(key: key);
+class MyHomePage extends StatelessWidget {
+  const MyHomePage({Key? key}) : super(key: key);
 
-  @override
-  State<MyScaffold> createState() => _MyScaffoldState();
-}
-
-class _MyScaffoldState extends State<MyScaffold> {
-  int currentPageIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Scaffold(
-        body: Column(
+    print('Second Build');
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'How Many Widget Builds',
+          style: GoogleFonts.alexBrush(
+            fontSize: 30.0,
+            color: Theme.of(context).colorScheme.error,
+          ),
+        ),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            MyAppBar(
-              title: Text(
-                'Test Your Knowledge...',
-                style: GoogleFonts.alexBrush(
-                  fontSize: 30.0,
-                  color: Theme.of(context).colorScheme.error,
-                ),
+            Text(
+              'You have pushed the button this many times:',
+              style: GoogleFonts.charm(
+                fontSize: 40.0,
+                color: Theme.of(context).colorScheme.outline,
               ),
             ),
-            Expanded(
-              child: Center(
-                child: Container(
-                  margin: const EdgeInsets.all(20.0),
-                  child: Text(
-                    'Here we will place our body widget...',
-                    style: GoogleFonts.charm(
-                      fontSize: 60.0,
-                      color: Theme.of(context).colorScheme.outline,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            const Count(),
           ],
         ),
-        bottomNavigationBar: NavigationBar(
-          onDestinationSelected: (int index) {
-            setState(() {
-              currentPageIndex = index;
-            });
-          },
-          selectedIndex: currentPageIndex,
-          destinations: const <Widget>[
-            NavigationDestination(
-              icon: Icon(Icons.explore),
-              label: 'Explore',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.commute),
-              label: 'Commute',
-            ),
-            NavigationDestination(
-              selectedIcon: Icon(Icons.bookmark),
-              icon: Icon(Icons.bookmark_border),
-              label: 'Saved',
-            ),
-          ],
-        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        key: const Key('increment_floatingActionButton'),
+
+        /// Calls `context.read` instead of `context.watch` so that it does not rebuild
+        /// when [Counter] changes.
+        onPressed: () => context.read<CountingTheNumber>().increaseValue(),
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
       ),
     );
   }
 }
 
-class MyAppBar extends StatelessWidget {
-  const MyAppBar({Key? key, required this.title}) : super(key: key);
-
-  final Widget title;
+class Count extends StatelessWidget {
+  const Count({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 116.0,
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Theme.of(context).colorScheme.outline,
-          width: 10,
-        ),
-      ),
-      child: Row(
-        children: <Widget>[
-          const IconButton(
-            icon: Icon(Icons.menu),
-            tooltip: 'Navigation menu',
-            onPressed: null,
-          ),
-          Expanded(
-            child: title,
-          ),
-          const IconButton(
-            icon: Icon(Icons.search),
-            tooltip: 'Search',
-            onPressed: null,
-          ),
-        ],
-      ),
+    print('Third Build');
+    return Text(
+      /// Calls `context.watch` to make [Count] rebuild when [Counter] changes.
+      '${context.watch<CountingTheNumber>().value}',
+      key: const Key('counterState'),
+      style: Theme.of(context).textTheme.headline2,
     );
   }
 }
