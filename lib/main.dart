@@ -14,6 +14,8 @@ final settings = ValueNotifier(
   ),
 );
 
+/// creating a new branch
+///
 void main() {
   runApp(
     ChangeNotifierProvider(
